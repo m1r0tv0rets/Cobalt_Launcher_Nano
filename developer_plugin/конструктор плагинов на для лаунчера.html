@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Конструктор плагинов для Cobalt Launcher Nano</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b1120;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: #38bdf8;
+        }
+        .sub {
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            border-left: 3px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .panel {
+            background: #0f172a;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            border: 1px solid #1e293b;
+        }
+        .panel-left {
+            flex: 2;
+            min-width: 280px;
+        }
+        .panel-right {
+            flex: 1.2;
+            min-width: 300px;
+        }
+        .section {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 1.2rem;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #a5f3fc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .block-card {
+            background: #1e293b;
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3b82f6;
+        }
+        .block-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .block-title {
+            font-weight: bold;
+            color: #facc15;
+        }
+        .btn-icon {
+            background: #334155;
+            border: none;
+            color: #f87171;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 2rem;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .btn-icon:hover {
+            background: #ef4444;
+            color: white;
+        }
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            color: #cbd5e1;
+        }
+        input, textarea, select {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 10px 12px;
+            color: #f1f5f9;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        textarea {
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+        button {
+            background: #3b82f6;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+            margin-right: 8px;
+        }
+        button.secondary {
+            background: #334155;
+        }
+        button.danger {
+            background: #b91c1c;
+        }
+        button:hover {
+            filter: brightness(1.05);
+            transform: scale(0.98);
+        }
+        .code-preview {
+            background: #020617;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 400px;
+            border: 1px solid #2d3a5e;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .badge {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+        hr {
+            border-color: #1e293b;
+        }
+        @media (max-width: 800px) {
+            body {
+                padding: 12px;
+            }
+            .panel {
+                padding: 1rem;
+            }
+            .block-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⚙️ Конструктор плагинов · Cobalt Launcher Nano</h1>
+    <div class="sub">Собирай плагины лаунчера визуально через блоки, добавляй команды, хуки и свой код.</div>
+
+    <div class="grid">
+        <div class="panel panel-left">
+            <div class="section">
+                <div class="section-title">📦 Импорты</div>
+                <textarea id="extraImports" rows="2" placeholder="import requests&#10;import json&#10;from pathlib import Path"></textarea>
+                <div class="badge">Можно использовать только импорты которые указаны в подсказках </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">🌍 Глобальный код (вне register_plugin)</div>
+                <textarea id="globalCode" rows="4" placeholder="# твои вспомогательные функции, переменные&#10;def my_helper():&#10;    return &quot;hello&quot;"></textarea>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>⌨️ Команды</span>
+                    <button type="button" class="secondary" id="addCommandBtn" style="margin:0; padding:4px 12px;">+ Добавить команду</button>
+                </div>
+                <div id="commandsList"></div>
+                <div class="badge">Функция команды принимает args (список строк). Можно использовать print, api.get_data_dir() и т.д.</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>🎨 Хук баннера (модифицирует приветствие)</span>
+                    <button type="button" class="secondary" id="addBannerHookBtn">+ Добавить хук</button>
+                </div>
+                <div id="bannerHooksList"></div>
+                <div class="badge">Функция принимает banner: str, возвращает изменённую строку</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">
+                    <span>📄 Хук информации (список строк)</span>
+                    <button type="button" class="secondary" id="addInfoHookBtn">+ Добавить хук</button>
+                </div>
+                <div id="infoHooksList"></div>
+                <div class="badge">Функция принимает info_lines: list[str], возвращает изменённый список</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">✏️ Пользовательский код внутри register_plugin</div>
+                <textarea id="customRegisterCode" rows="4" placeholder="# выполнится в начале register_plugin(api)&#10;# например, print(&quot;Плагин загружен&quot;)" ></textarea>
+            </div>
+        </div>
+
+        <div class="panel panel-right">
+            <div class="section-title">📄 Готовый код плагина</div>
+            <div class="code-preview" id="codePreview">// нажмите «Собрать и скачать»</div>
+            <div class="flex-row" style="margin-top: 20px;">
+                <button id="generateBtn">🔧 Собрать плагин</button>
+                <button id="downloadBtn" class="secondary">⬇️ Скачать .py</button>
+                <button id="resetExampleBtn" class="secondary">🧹 Сброс примера</button>
+            </div>
+            <div class="badge" style="margin-top: 15px;">Плагин совместим с Cobalt Launcher (API: register_plugin, команды, хуки). Поместите .py файл в папку plugins.</div>
+            <hr>
+            <div class="section-title">📱 Подсказки</div>
+            <ul style="font-size: 0.85rem; color:#cbd5e6; padding-left: 1.2rem;">
+                <li>В командах используйте <code>api</code> (экземпляр PluginAPI) – например, <code>api.get_data_dir()</code></li>
+                <li>Хук баннера: def my_banner(banner): return banner + "\\nДоп. строка"</li>
+                <li>Хук информации: def my_info(lines): lines.append("Новый сервер"); return lines</li>
+                <li> Можно использовать только эти импорты: math, random, calendar, struct, binascii, unicodedata, sqlite3, PIL, os, sys, json, zipfile, requests, subprocess, platform, shutil, re, webbrowser, getpass, signal, threading, time, itertools, from pathlib import Path. from datetime import datetime. from typing import dist, list, optional, any, callable. minecraft_launcher_lib, from colored import fg, attr
+from typing import Dict, List, Optional, Any, Callable. tarfile, urlib.parse.</li>
+            </ul>
+        </div>
+    </div>
+
+<script>
+    let commands = [];       // { name, funcCode, hidden }
+    let bannerHooks = [];    // { funcCode }
+    let infoHooks = [];      // { funcCode }
+
+    function escapeForPythonString(str) {
+        return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    }
+
+    function generatePluginCode() {
+        const extraImports = document.getElementById('extraImports').value.trim();
+        const globalCode = document.getElementById('globalCode').value.trim();
+        const customRegister = document.getElementById('customRegisterCode').value.trim();
+
+        let imports = `# Plugin для Cobalt Launcher Nano\n# Сгенерировано конструктором (offline)\nimport os\nimport sys\n`;
+        if (extraImports) imports += extraImports + '\n';
+        
+        let globalSection = '';
+        if (globalCode) globalSection = globalCode + '\n\n';
+   
+        let commandFuncs = '';
+        let commandRegistrations = '';
+        for (let i = 0; i < commands.length; i++) {
+            const cmd = commands[i];
+            const funcName = `cmd_${cmd.name.replace(/[^a-zA-Z0-9_]/g, '_')}`;
+            commandFuncs += `def ${funcName}(args):\n    ${cmd.funcCode.replace(/\n/g, '\n    ')}\n\n`;
+            const hiddenFlag = cmd.hidden ? 'hidden=True' : '';
+            commandRegistrations += `    api.register_command("${cmd.name}", ${funcName}, ${hiddenFlag})\n`;
+        }
+        
+        let bannerFuncs = '';
+        let bannerRegistrations = '';
+        for (let i = 0; i < bannerHooks.length; i++) {
+            const hook = bannerHooks[i];
+            const funcName = `banner_hook_${i}`;
+            bannerFuncs += `def ${funcName}(banner):\n    ${hook.funcCode.replace(/\n/g, '\n    ')}\n\n`;
+            bannerRegistrations += `    api.register_banner_hook(${funcName})\n`;
+        }
+
+        let infoFuncs = '';
+        let infoRegistrations = '';
+        for (let i = 0; i < infoHooks.length; i++) {
+            const hook = infoHooks[i];
+            const funcName = `info_hook_${i}`;
+            infoFuncs += `def ${funcName}(info_lines):\n    ${hook.funcCode.replace(/\n/g, '\n    ')}\n\n`;
+            infoRegistrations += `    api.register_info_hook(${funcName})\n`;
+        }
+        
+        let customRegisterCodeBlock = '';
+        if (customRegister) {
+            customRegisterCodeBlock = `    # Пользовательский код внутри register_plugin\n    ${customRegister.replace(/\n/g, '\n    ')}\n`;
+        }
+        
+        const pluginTemplate = `${imports}
+
+${globalSection}
+${commandFuncs}
+${bannerFuncs}
+${infoFuncs}
+
+def register_plugin(api):
+    """Регистрация плагина в лаунчере"""
+${customRegisterCodeBlock}
+    # Регистрация команд
+${commandRegistrations}
+    # Регистрация хуков баннера
+${bannerRegistrations}
+    # Регистрация хуков информации
+${infoRegistrations}
+    
+    # Необязательный возврат, API ничего не ожидает
+    print("[Плагин] Загружен успешно")
+`;
+        // убираем лишние пустые строки, но сохраняем формат
+        return pluginTemplate;
+    }
+
+    // обновить превью
+    function updatePreview() {
+        const code = generatePluginCode();
+        document.getElementById('codePreview').innerText = code;
+    }
+    
+    // ---- отрисовка списков UI ----
+    function renderCommands() {
+        const container = document.getElementById('commandsList');
+        if (commands.length === 0) {
+            container.innerHTML = '<div class="badge" style="padding: 12px;">Нет команд. Добавьте через кнопку ↑</div>';
+            return;
+        }
+        container.innerHTML = '';
+        commands.forEach((cmd, idx) => {
+            const card = document.createElement('div');
+            card.className = 'block-card';
+            card.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">🔹 /${escapeHtml(cmd.name)}</span>
+                    <button class="btn-icon" data-type="cmd" data-index="${idx}" title="Удалить">✖</button>
+                </div>
+                <label>Имя команды (без пробелов)</label>
+                <input type="text" class="cmd-name" value="${escapeHtml(cmd.name)}" data-idx="${idx}">
+                <label>Код функции (args):</label>
+                <textarea rows="3" class="cmd-code" data-idx="${idx}" style="font-family:monospace;">${escapeHtml(cmd.funcCode)}</textarea>
+                <label style="display: inline-flex; gap: 8px; align-items: center; margin-top: 8px;">
+                    <input type="checkbox" class="cmd-hidden" data-idx="${idx}" ${cmd.hidden ? 'checked' : ''}> Скрытая команда (не показывается в помощи)
+                </label>
+            `;
+            container.appendChild(card);
+        });
+        attachCommandEvents();
+    }
+    
+    function attachCommandEvents() {
+        document.querySelectorAll('.cmd-name').forEach(inp => {
+            inp.removeEventListener('change', handleCmdNameChange);
+            inp.addEventListener('change', handleCmdNameChange);
+        });
+        document.querySelectorAll('.cmd-code').forEach(ta => {
+            ta.removeEventListener('input', handleCmdCodeChange);
+            ta.addEventListener('input', handleCmdCodeChange);
+        });
+        document.querySelectorAll('.cmd-hidden').forEach(ch => {
+            ch.removeEventListener('change', handleCmdHiddenChange);
+            ch.addEventListener('change', handleCmdHiddenChange);
+        });
+        document.querySelectorAll('.btn-icon[data-type="cmd"]').forEach(btn => {
+            btn.removeEventListener('click', handleCmdDelete);
+            btn.addEventListener('click', handleCmdDelete);
+        });
+    }
+    
+    function handleCmdNameChange(e) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (!isNaN(idx) && commands[idx]) commands[idx].name = e.target.value;
+        renderCommands(); updatePreview();
+    }
+    function handleCmdCodeChange(e) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (!isNaN(idx) && commands[idx]) commands[idx].funcCode = e.target.value;
+        updatePreview();
+    }
+    function handleCmdHiddenChange(e) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (!isNaN(idx) && commands[idx]) commands[idx].hidden = e.target.checked;
+        updatePreview();
+    }
+    function handleCmdDelete(e) {
+        const idx = parseInt(e.target.dataset.index);
+        if (!isNaN(idx)) {
+            commands.splice(idx, 1);
+            renderCommands();
+            updatePreview();
+        }
+    }
+    
+    function renderBannerHooks() {
+        const container = document.getElementById('bannerHooksList');
+        if (bannerHooks.length === 0) {
+            container.innerHTML = '<div class="badge">Нет хуков баннера</div>';
+            return;
+        }
+        container.innerHTML = '';
+        bannerHooks.forEach((hook, idx) => {
+            const card = document.createElement('div');
+            card.className = 'block-card';
+            card.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">🎨 Хук баннера #${idx+1}</span>
+                    <button class="btn-icon" data-type="banner" data-index="${idx}" title="Удалить">✖</button>
+                </div>
+                <label>Функция (принимает banner, возвращает строку):</label>
+                <textarea rows="3" class="banner-code" data-idx="${idx}" style="font-family:monospace;">${escapeHtml(hook.funcCode)}</textarea>
+                <div class="badge">Пример: return banner + "\\nCobalt rocks!"</div>
+            `;
+            container.appendChild(card);
+        });
+        document.querySelectorAll('.banner-code').forEach(ta => {
+            ta.removeEventListener('input', handleBannerChange);
+            ta.addEventListener('input', handleBannerChange);
+        });
+        document.querySelectorAll('.btn-icon[data-type="banner"]').forEach(btn => {
+            btn.removeEventListener('click', handleBannerDelete);
+            btn.addEventListener('click', handleBannerDelete);
+        });
+    }
+    function handleBannerChange(e) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (!isNaN(idx) && bannerHooks[idx]) bannerHooks[idx].funcCode = e.target.value;
+        updatePreview();
+    }
+    function handleBannerDelete(e) {
+        const idx = parseInt(e.target.dataset.index);
+        if (!isNaN(idx)) { bannerHooks.splice(idx,1); renderBannerHooks(); updatePreview(); }
+    }
+
+    function renderInfoHooks() {
+        const container = document.getElementById('infoHooksList');
+        if (infoHooks.length === 0) {
+            container.innerHTML = '<div class="badge">Нет хуков информации</div>';
+            return;
+        }
+        container.innerHTML = '';
+        infoHooks.forEach((hook, idx) => {
+            const card = document.createElement('div');
+            card.className = 'block-card';
+            card.innerHTML = `
+                <div class="block-header">
+                    <span class="block-title">📄 Хук информации #${idx+1}</span>
+                    <button class="btn-icon" data-type="info" data-index="${idx}" title="Удалить">✖</button>
+                </div>
+                <label>Функция (принимает info_lines: list, возвращает list):</label>
+                <textarea rows="3" class="info-code" data-idx="${idx}" style="font-family:monospace;">${escapeHtml(hook.funcCode)}</textarea>
+                <div class="badge">Пример: lines.append("IP: play.example.com"); return lines</div>
+            `;
+            container.appendChild(card);
+        });
+        document.querySelectorAll('.info-code').forEach(ta => {
+            ta.removeEventListener('input', handleInfoChange);
+            ta.addEventListener('input', handleInfoChange);
+        });
+        document.querySelectorAll('.btn-icon[data-type="info"]').forEach(btn => {
+            btn.removeEventListener('click', handleInfoDelete);
+            btn.addEventListener('click', handleInfoDelete);
+        });
+    }
+    function handleInfoChange(e) {
+        const idx = parseInt(e.target.dataset.idx);
+        if (!isNaN(idx) && infoHooks[idx]) infoHooks[idx].funcCode = e.target.value;
+        updatePreview();
+    }
+    function handleInfoDelete(e) {
+        const idx = parseInt(e.target.dataset.index);
+        if (!isNaN(idx)) { infoHooks.splice(idx,1); renderInfoHooks(); updatePreview(); }
+    }
+
+    function addCommand() {
+        commands.push({
+            name: `mycmd${commands.length+1}`,
+            funcCode: `print("Выполнена команда!", args)\n# api.get_data_dir()`,
+            hidden: false
+        });
+        renderCommands();
+        updatePreview();
+    }
+    function addBannerHook() {
+        bannerHooks.push({ funcCode: `# Изменить баннер\nreturn banner + "\\nДобавлено плагином"` });
+        renderBannerHooks();
+        updatePreview();
+    }
+    function addInfoHook() {
+        infoHooks.push({ funcCode: `# Добавить строку в информацию\ninfo_lines.append("Новая строка от плагина")\nreturn info_lines` });
+        renderInfoHooks();
+        updatePreview();
+    }
+
+    function downloadPlugin() {
+        const code = generatePluginCode();
+        const blob = new Blob([code], {type: 'text/x-python'});
+        const a = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        a.href = url;
+        a.download = `cobalt_plugin_${Date.now()}.py`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    
+    function resetExample() {
+        commands = [
+            { name: "hello", funcCode: 'print("Привет из плагина!")\nprint("Аргументы:", args)', hidden: false },
+            { name: "server", funcCode: 'import webbrowser\nwebbrowser.open("https://cobalt.example.com")\nprint("Открыт сайт")', hidden: false }
+        ];
+        bannerHooks = [
+            { funcCode: 'return banner + "\\n' + escapeForPythonString('✨ Плагин активен ✨') + '"' }
+        ];
+        infoHooks = [
+            { funcCode: 'info_lines.append("§a▶ Сервер плагина: play.cobalt.ru")\nreturn info_lines' }
+        ];
+        document.getElementById('extraImports').value = '# дополнительные импорты (пример)\nimport webbrowser';
+        document.getElementById('globalCode').value = '# глобальная переменная\nglobal_flag = True';
+        document.getElementById('customRegisterCode').value = 'print("Плагин зарегистрирован, версия 1.0")';
+        renderCommands();
+        renderBannerHooks();
+        renderInfoHooks();
+        updatePreview();
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    document.getElementById('addCommandBtn').addEventListener('click', addCommand);
+    document.getElementById('addBannerHookBtn').addEventListener('click', addBannerHook);
+    document.getElementById('addInfoHookBtn').addEventListener('click', addInfoHook);
+    document.getElementById('generateBtn').addEventListener('click', updatePreview);
+    document.getElementById('downloadBtn').addEventListener('click', downloadPlugin);
+    document.getElementById('resetExampleBtn').addEventListener('click', resetExample);
+    document.getElementById('extraImports').addEventListener('input', updatePreview);
+    document.getElementById('globalCode').addEventListener('input', updatePreview);
+    document.getElementById('customRegisterCode').addEventListener('input', updatePreview);
+
+    resetExample();
+</script>
+</body>
+</html>

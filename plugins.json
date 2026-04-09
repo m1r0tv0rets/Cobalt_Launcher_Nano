@@ -1,7 +1,7 @@
 [
   {
-    "name": "Название плагина",
-    "description": "Краткое описание того, что делает плагин",
-    "download_url": "https://github.com/m1r0tv0rets/Cobalt_Launcher_Nano/blob/main/plugins%20/tester.zip"
+    "name": "Плагин Разработчика",
+    "description": "Содержит утилиты и инструменты для создания плагинов для лаунчера. А также инструменты для создания шейдеров, модов, ресурспаков, датапаков. Серверов майнкрафт а также документация.",
+    "download_url": "https://github.com/m1r0tv0rets/Cobalt_Launcher_Nano/blob/main/plugins%20/developer.zip"
   }
 ]

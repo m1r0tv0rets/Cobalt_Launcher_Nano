@@ -1,12 +1,9 @@
-🚀 ### Cobalt Launcher Nano
+### 🚀 Cobalt Launcher Nano
 
 Лёгкий, быстрый и мощный лаунчер для Minecraft на Python.
 Устанавливайте ванильные версии, Forge, Fabric — всё в отдельные профили, как в официальном лаунчере.
-Никаких сторонних библиотек для установки версий — только прямые API Mojang, Fabric и Forge.
+Никаких сторонних библиотек для установки версий — только прямые API Mojang, Fabric и Forge и тд.
 
-https://img.shields.io/badge/python-3.8+-blue?logo=python
-https://img.shields.io/badge/license-MIT-green
-https://img.shields.io/badge/platform-Windows%2520%257C%2520Linux%2520%257C%2520macOS-lightgrey
 ✨ Возможности
 
     ✅ Установка любых версий Minecraft (альфа, бета, снапшоты, релизы)

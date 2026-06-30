@@ -47,6 +47,7 @@ from datetime import datetime
 import urllib.request
 from pathlib import Path
 import zipfile
+import json
 ```
 2) ЦВЕТНЫЕ КОМАНДЫ
 Для Цветного вывода команд можно использовать Переменные по типу RED, GREEN, BLUE а в конце обязательно использовать COLOR_END. И обязательно чтобы пайтон считывал переменные в комментарии ставьте перед ним букву f.

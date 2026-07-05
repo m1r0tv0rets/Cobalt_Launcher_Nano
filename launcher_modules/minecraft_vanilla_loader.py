@@ -29,7 +29,7 @@ if command == "запуск ванили":
     print(f"{GREEN}{versions_list_folder.name} {COLOR_END}")
   
   version_minecraft = str(input(f"{YELLOW}Введите название версии которую вы хотите запустить: {COLOR_END}")).strip()
-  ram_size = str(input(f"{YELLOW}Сколько хотите выделить ОЗУ игре: {COLOR_END}")).strip()
+  ram_size = str(input(f"{YELLOW}Сколько хотите выделить ОЗУ игре(минимум 2 гб): {COLOR_END}")).strip()
   version_java = str(input(f"{YELLOW}Какую версию джавы вы хотите использовать? 8(До 1.16.5), 17(До 1.21.4), 21(До последних) (или свою джаву) (или свои аргументы): {COLOR_END}")).strip()
     
   if version_java == "8":

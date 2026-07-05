@@ -50,6 +50,8 @@ if command == "запуск мод":
   collector_java_exe = r"C:\cobalt_launcher_nano_reliz\java\java_17\bin\java.exe"
 
  version = f"{version_minecraft}"
+ if 'instance_name' not in locals() or not instance_name:
+  instance_name = "default"
  instances_game_directory = rf"C:\cobalt_launcher_nano_reliz\instances\{instance_name}"
  username = offline_accounts_input or choise_number_username
 
@@ -79,5 +81,14 @@ if command == "запуск мод":
  }
 
  launch_command = minecraft_launcher_lib.command.get_minecraft_command(version, minecraft_modloader_folder, options)
- subprocess.Popen(launch_command, creationflags=subprocess.CREATE_NEW_CONSOLE)
- print(f"{GREEN}Minecraft {version} скоро запустится!{COLOR_END}")
+
+ log_dir = rf"C:\cobalt_launcher_nano_reliz\instances\{instance_name}\logs"
+ os.makedirs(log_dir, exist_ok=True)
+
+ current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+ unique_log_path = os.path.join(log_dir, f"log_{current_time}.txt")
+
+ log_file = open(unique_log_path, "w", encoding="utf-8")
+
+ subprocess.Popen(launch_command, stdout=log_file, stderr=log_file, creationflags=subprocess.CREATE_NEW_CONSOLE)
+ print(f"{GREEN}Minecraft {version} запущен! Консоль открыта, лог успешно пишется в файл log_{current_time}.txt{COLOR_END}")

@@ -50,6 +50,7 @@ if command == "запуск мод":
   collector_java_exe = r"C:\cobalt_launcher_nano_reliz\java\java_17\bin\java.exe"
 
  version = f"{version_minecraft}"
+ instances_game_directory = rf"C:\cobalt_launcher_nano_reliz\instances\{instance_name}"
  username = offline_accounts_input or choise_number_username
 
  minecraft_modloader_folder = ""
@@ -73,7 +74,8 @@ if command == "запуск мод":
   "token": "",
   "executablePath": collector_java_exe,
   "jvmArguments": final_java_arguments,
-  "enableLoggingConfig": False
+  "enableLoggingConfig": False,
+  "gameDirectory": instances_game_directory
  }
 
  launch_command = minecraft_launcher_lib.command.get_minecraft_command(version, minecraft_modloader_folder, options)

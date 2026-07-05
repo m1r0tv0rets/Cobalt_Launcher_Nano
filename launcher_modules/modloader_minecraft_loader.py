@@ -29,7 +29,7 @@ if command == "запуск мод":
       print(f"{GREEN}{version_path.name}{COLOR_END}")
 
  version_minecraft = str(input(f"{YELLOW}Введите название версии которую вы хотите запустить: {COLOR_END}")).strip()
- ram_size = str(input(f"{YELLOW}Сколько хотите выделить ОЗУ игре: {COLOR_END}")).strip()
+ ram_size = str(input(f"{YELLOW}Сколько хотите выделить ОЗУ игре(минимум 4 гб): {COLOR_END}")).strip()
  version_java = str(input(f"{YELLOW}Какую версию джавы вы хотите использовать? 8(До 1.16.5), 17(До 1.21.4), 21(До последних) (или свою джаву) (или свои аргументы): {COLOR_END}")).strip()
 
  if version_java == "8":
@@ -68,7 +68,7 @@ if command == "запуск мод":
  if user_arguments_input:
   final_java_arguments = user_arguments_input.split()
  else:
-  final_java_arguments = [f"-Xmx{ram_size}G", f"-Xms{ram_size}G"]
+  final_java_arguments = [f"-Xmx{ram_size}G", f"-Xms4G"]
 
  options = {
   "username": username,
@@ -82,13 +82,6 @@ if command == "запуск мод":
 
  launch_command = minecraft_launcher_lib.command.get_minecraft_command(version, minecraft_modloader_folder, options)
 
- log_dir = rf"C:\cobalt_launcher_nano_reliz\instances\{instance_name}\logs"
- os.makedirs(log_dir, exist_ok=True)
-
- current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
- unique_log_path = os.path.join(log_dir, f"log_{current_time}.txt")
-
- log_file = open(unique_log_path, "w", encoding="utf-8")
-
- subprocess.Popen(launch_command, stdout=log_file, stderr=log_file, creationflags=subprocess.CREATE_NEW_CONSOLE)
- print(f"{GREEN}Minecraft {version} запущен! Консоль открыта, лог успешно пишется в файл log_{current_time}.txt{COLOR_END}")
+ cmd_command = ["cmd.exe", "/K"] + launch_command
+ subprocess.Popen(cmd_command, creationflags=subprocess.CREATE_NEW_CONSOLE)
+ print(f"{GREEN}Minecraft {version} скоро запустится!{COLOR_END}")

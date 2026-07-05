@@ -56,6 +56,7 @@ if command == "запуск ванили":
 
   minecraft_folder = r"C:\cobalt_launcher_nano_reliz\minecraft_vanilla" 
   version = f"{version_minecraft}"
+  instances_game_directory = rf"C:\cobalt_launcher_nano_reliz\instances\{instance_name}"
   username = offline_accounts_input or choise_number_username
 
   if user_arguments_input:
@@ -70,7 +71,8 @@ if command == "запуск ванили":
    "token": "",         
    "executablePath": collector_java_exe, 
    "jvmArguments": final_java_arguments,
-   "enableLoggingConfig": False
+   "enableLoggingConfig": False,
+   "gameDirectory": instances_game_directory
   }
 
   launch_command = minecraft_launcher_lib.command.get_minecraft_command(version, minecraft_folder, options)

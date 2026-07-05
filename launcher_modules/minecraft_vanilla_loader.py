@@ -78,6 +78,5 @@ if command == "запуск ванили":
   launch_command = minecraft_launcher_lib.command.get_minecraft_command(version, minecraft_folder, options)
 
   cmd_command = ["cmd.exe", "/K"] + launch_command
-
   subprocess.Popen(cmd_command, creationflags=subprocess.CREATE_NEW_CONSOLE)
   print(f"{GREEN}Minecraft {version} скоро запустится!{COLOR_END}")

@@ -34,10 +34,6 @@ for folder in folders:
  create_folders = os.path.join(root_folder, folder)
  os.makedirs(create_folders, exist_ok=True)
  
-root_minecraft_folder = Path(r"C:\cobalt_launcher_nano_reliz\minecraft_vanilla")
-create_folder_screenshots = os.path.join(root_minecraft_folder, "screenshots")
-os.makedirs(create_folder_screenshots, exist_ok=True)
- 
 try:
  with open(r"C:\cobalt_launcher_nano_reliz\config_files\accounts.txt", "x", encoding="utf-8") as file:
   pass
@@ -125,7 +121,30 @@ print(f"""
 {BLUE}ДЛЯ ПЛАГИНОВ КОМАНДА ПОМОЩИ СОСТОИТ ИЗ НАЗВАНИЯ ПЛАГИНА И СЛОВА ПОМОЩЬ {COLOR_END}
 """)
 
-choice_instances = str(input(f"{RED}Выберите инстанс или создайте новый: {COLOR_END}"))
+instances_folder = Path(r"C:\cobalt_launcher_nano_reliz\instances")
+os.makedirs(instances_folder, exist_ok=True)
+
+for number, folder_instances_list in enumerate(instances_folder.iterdir(), start=1):
+ if folder_instances_list.is_dir():
+  print(f"{GREEN}{number}) {folder_instances_list.name}{COLOR_END}")
+
+choice_instances = str(input(f"{RED}Напиши название инстанса или создайте новый (введя слово 'новый'): {COLOR_END}")).strip()
+
+if choice_instances == "новый":
+ instance_name = str(input(f"{YELLOW}Введите название нового инстанса: {COLOR_END}")).strip()
+ if instance_name:
+  instance_path = Path(rf"C:\cobalt_launcher_nano_reliz\instances\{instance_name}")
+  os.makedirs(instance_path / "mods", exist_ok=True)
+  os.makedirs(instance_path / "resourcepacks", exist_ok=True)
+  os.makedirs(instance_path / "saves", exist_ok=True)
+  os.makedirs(instance_path / "config", exist_ok=True)
+  os.makedirs(instance_path / "schematics", exist_ok=True)
+  os.makedirs(instance_path / "screenshots", exist_ok=True)
+  os.makedirs(instance_path / "shaderpacks", exist_ok=True)
+  print(f"{GREEN}Создан и выбран инстанс: {instance_name}{COLOR_END}")
+else:
+ instance_name = choice_instances
+ print(f"{GREEN}Выбран инстанс: {instance_name}{COLOR_END}")
 
 while True:
  # глобальный слушитель

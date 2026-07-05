@@ -28,7 +28,7 @@ if command == "помощь":
 {GREEN}удалить лаунчер{COLOR_END} - Полностью удалить папку лаунчера
 
 {PURPLE}МОДЫ:{COLOR_END}
-{GREEN}установить мод{COLOR_END} - Установка мода с Modrinth (включая избранное)
+{GREEN}установить мод{COLOR_END} - Установка мода с Modrinth
 {GREEN}альт мод{COLOR_END} - Искать моды на ru-minecraft.ru
 
 {PURPLE}ИНФОРМАЦИЯ И ЗАМЕТКИ:{COLOR_END}

@@ -93,13 +93,14 @@ os.makedirs(create_folder_kowk, exist_ok=True) # создание папки kow
 ```python
 import random # запрос библиотеки
 
-nickname = str(input("Нажмите 1 чтобы выбрать рандомный никнейм")) # ввод строки
+if command == "рандом никнейм"
+ nickname = str(input("Нажмите 1 чтобы выбрать рандомный никнейм")) # ввод строки
 
-list_nickname = ["steve", "alex", "kowk"] # создание списка
+ list_nickname = ["steve", "alex", "kowk"] # создание списка
 
-ready_nickname = random.choice(list_nickname) # перебор элементов списка с помощью метода choice и сохранение в переменную
+ ready_nickname = random.choice(list_nickname) # перебор элементов списка с помощью метода choice и сохранение в переменную
 
-print(f"{GREEN} ВАШ РАНДОМНЫЙ НИКНЕЙМ: {ready_nickname} {COLOR_END}") # вывод
+ print(f"{GREEN} ВАШ РАНДОМНЫЙ НИКНЕЙМ: {ready_nickname} {COLOR_END}") # вывод
 ```
 
 ---

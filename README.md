@@ -1,4 +1,4 @@
-### 🚀 Cobalt Launcher Nano
+### 🚀 Cobalt Launcher Nano/Ultra
 
 Лаунчер для Minecraft на Python.
 Устанавливайте ванильные версии, Forge, Fabric — всё в отдельные папки.
